@@ -1905,25 +1905,39 @@ const View = {
 /* harmony default export */ var viewModule = (View);
 // EXTERNAL MODULE: ./node_modules/axios/index.js
 var axios = __webpack_require__(7);
-var axios_default = /*#__PURE__*/__webpack_require__.n(axios);
 
 // CONCATENATED MODULE: ./dataModule/dataModule.js
 
 
 
+const obj = {  // add for localVersion
+    first: true,
+    second: false,
+    third: true
+}
+
 const dataModule = {
     sendDataFromInput: function () {
         const inputData = document.querySelector('.input-field').value;
         console.log(inputData)
-        axios_default.a.get(`/input?data=${inputData}`).then((result) => {
-            if (result.data === true) {
-                viewModule.addResultField(true)
-            } else if (result.data === false) { 
-                viewModule.addResultField(false)
-            } else {
-                viewModule.addResultField(undefined)
+
+        let ansver = undefined;
+        for (let key in obj) {
+            if (inputData == key) {
+                ansver = obj[key];
             }
-        }).catch((err) => console.log(err))
+        }
+        viewModule.addResultField(ansver)
+
+        // axios.get(`/input?data=${inputData}`).then((result) => {
+        //     if (result.data === true) {
+        //         View.addResultField(true)
+        //     } else if (result.data === false) { 
+        //         View.addResultField(false)
+        //     } else {
+        //         View.addResultField(undefined)
+        //     }
+        // }).catch((err) => console.log(err))
     }
 }
 
