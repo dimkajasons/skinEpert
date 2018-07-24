@@ -1855,50 +1855,33 @@ __webpack_require__.r(__webpack_exports__);
 const View = {
     inputContainer: document.querySelector('#input-container'),
     addResultField: function(type) {
-        const mainField = document.querySelector('.main-field');
-        const resultField = document.createElement('div');
-        resultField.classList.add('result-field');
-        resultField.innerHTML = document.querySelector('.input-field').value;
-        this.inputContainer.insertBefore(resultField, mainField);
+        const mainField = document.querySelector('.field-wrap');
+        const fieldWrapRes = document.createElement('div');
+        fieldWrapRes.classList.add('field-wrap', 'field-wrap_res');
+        const resultField = document.createElement('span');
+        resultField.innerText = document.querySelector('.input-field').value;
+        document.querySelector('.input-field').value = ''
+        resultField.classList.add('result-field')
+        fieldWrapRes.appendChild(resultField);
+        this.inputContainer.insertBefore(fieldWrapRes, mainField);
 
         const deleteButton = document.createElement('button');
-        deleteButton.classList.add('delete-button')
-        deleteButton.innerText = 'Delete';
+        deleteButton.classList.add('delete-button');
+        deleteButton.classList.add('confirm-button')
+        deleteButton.innerHTML = '<i class="icon-cancel"></i>';
         deleteButton.addEventListener('click', function() {
             deleteButton.parentNode.parentNode.removeChild(deleteButton.parentNode);
         });
 
-        resultField.appendChild(deleteButton)
+        fieldWrapRes.appendChild(deleteButton)
 
         if (type === true) {
-            resultField.classList.add('green-border')
+            resultField.style.borderColor = 'green';
         } else if (type === false) {
-            resultField.classList.add('red-border')
+            resultField.style.borderColor = 'red';
         } else {
-            resultField.classList.add('yellow-border')
+            resultField.style.borderColor = 'yellow';
         }
-        this.addDeleteButton();
-    },
-    addDeleteButton: function (field) {
-        
-    },
-    addNewField: function() {
-        const mainField = document.createElement('div');
-        mainField.classList.add('main-field');
-        this.inputContainer.appendChild(mainField);
-        this.viewInputField();
-        this.viewAddButton();
-    },
-    viewAddButton: function () {
-        const confirmButton = document.createElement('button');
-        confirmButton.innerText = 'Confirm';
-        confirmButton.classList.add('confirm-button');
-        document.querySelector('.main-field').appendChild(confirmButton);
-    },
-    viewInputField: () => {
-        const inputField = document.createElement('input');
-        inputField.classList.add('input-field');
-        document.querySelector('.main-field').appendChild(inputField);
     }
 };
 
@@ -1918,8 +1901,11 @@ const obj = {  // add for localVersion
 
 const dataModule = {
     sendDataFromInput: function () {
-        const inputData = document.querySelector('.input-field').value;
+        const inputData = document.querySelector('.input-field').value.toLowerCase();
         console.log(inputData)
+        if(!inputData) {
+            return
+        }
 
         let ansver = undefined;
         for (let key in obj) {
@@ -1949,7 +1935,7 @@ const dataModule = {
 
 const Events = {
     confirmButtonEvent: function () {
-        const confirmButton = document.querySelector('.confirm-button')
+        const confirmButton = document.querySelector('.add-button')
         confirmButton.addEventListener('click', dataModule_dataModule.sendDataFromInput);
     }
 }
@@ -1959,7 +1945,7 @@ const Events = {
 
 
 
-viewModule.addNewField();
+//View.addNewField();
 eventModule.confirmButtonEvent();
 
 /***/ })

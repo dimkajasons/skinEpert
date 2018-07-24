@@ -9,8 +9,11 @@ const obj = {  // add for localVersion
 
 const dataModule = {
     sendDataFromInput: function () {
-        const inputData = document.querySelector('.input-field').value;
+        const inputData = document.querySelector('.input-field').value.toLowerCase();
         console.log(inputData)
+        if(!inputData) {
+            return
+        }
 
         let ansver = undefined;
         for (let key in obj) {
